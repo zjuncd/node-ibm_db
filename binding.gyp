@@ -79,7 +79,7 @@
 		  ],
           'libraries' : [
             '-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib64 ',
-            '-ldb2'
+            '-libdb2.dylib'
           ],
           'include_dirs': [
             '$(IBM_DB_HOME)/include'
