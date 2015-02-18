@@ -69,6 +69,25 @@
             "-g "
 		  ],
         }],
+		[ 'OS == "mac" and target_arch =="x64" ', {
+		  'conditions' : [
+			[ 'IS_DOWNLOADED == "true" ', {
+				'ldflags' : [
+					"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
+				],
+			}]
+		  ],
+          'libraries' : [
+            '-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib64 ',
+            '-ldb2'
+          ],
+          'include_dirs': [
+            '$(IBM_DB_HOME)/include'
+          ],
+          'cflags' : [
+            "-g "
+		  ],
+        }],
 		[ 'OS=="win" and target_arch =="ia32"', {
           'sources' : [
             'src/strptime.c',
