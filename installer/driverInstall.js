@@ -64,7 +64,7 @@ var download_file_httpget = function(file_url) {
 		if (!fs.existsSync(IBM_DB_LIB)) {
 			console.log('Environment variable IBM_DB_HOME is not set to the correct directory. Please check if you have set the IBM_DB_HOME environment variable\'s value correctly.');
 		}
-		if((platform != 'win32') {
+		if( platform != 'win32') {
 			
 			if(platform == 'linux' || (platform == 'darwin' && arch == 'x64')) {
 				removeWinBuildArchive();
