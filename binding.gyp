@@ -57,18 +57,6 @@
           ],
         }],
 		
-        [ 'OS == "mac" and target_arch =="x64" ', {
-          'libraries' : [
-            '-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib64 ',
-            '-ldb2'
-          ],
-          'include_dirs': [
-            '$(IBM_DB_HOME)/include'
-          ],
-          'cflags' : [
-            "-g "
-		  ],
-        }],
 		[ 'OS == "mac" and target_arch =="x64" ', {
 		  'conditions' : [
 			[ 'IS_DOWNLOADED == "true" ', {
@@ -77,9 +65,16 @@
 				],
 			}]
 		  ],
-          'libraries' : [
-            '-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib64 ',
-            '-libdb2.dylib'
+		  "xcode_settings": {
+			'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
+			'ldflags' : [
+				"-Wl,-R, '$(IBM_DB_HOME)/lib' "
+			]
+		  },
+
+		  'libraries' : [
+            	'-L$(IBM_DB_HOME)/lib ', 
+				'-ldb2'
           ],
           'include_dirs': [
             '$(IBM_DB_HOME)/include'
