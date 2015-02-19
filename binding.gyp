@@ -65,13 +65,19 @@
 				],
 			}]
 		  ],
-		  "xcode_settings": {
+		  'xcode_settings': {
 			'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
-			'ldflags' : [
-				"-Wl,-R, '$(IBM_DB_HOME)/lib' "
+		    'conditions' : [
+				[ 'IS_DOWNLOADED == "true" ', {
+					'ldflags' : [
+						"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
+					],
+					'OTHER_LDFLAGS' : [
+						"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
+					],
+				}]
 			]
 		  },
-
 		  'libraries' : [
             	'-L$(IBM_DB_HOME)/lib ', 
 				'-ldb2'
