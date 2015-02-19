@@ -70,10 +70,10 @@
 		    'conditions' : [
 				[ 'IS_DOWNLOADED == "true" ', {
 					'ldflags' : [
-						"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
+						"-Wl,'<(ORIGIN_LIB_PATH)' "
 					],
 					'OTHER_LDFLAGS' : [
-						"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
+						"-Wl,'<(ORIGIN_LIB_PATH)' "
 					],
 				}]
 			]
