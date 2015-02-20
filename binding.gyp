@@ -71,6 +71,7 @@
            'cflags' : [
 				"-g "
 		   ]
+		  }
         }],
 		[ 'OS=="win" and target_arch =="ia32"', {
           'sources' : [
