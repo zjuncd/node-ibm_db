@@ -60,7 +60,7 @@
 		[ 'OS == "mac" and target_arch =="x64" ', {
 		  'xcode_settings': {
 			'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
-		    
+		  },
 		   'libraries' : [
             	'-L$(IBM_DB_HOME)/lib ', 
 				'-ldb2'
@@ -71,7 +71,6 @@
            'cflags' : [
 				"-g "
 		   ]
-		  }
         }],
 		[ 'OS=="win" and target_arch =="ia32"', {
           'sources' : [
