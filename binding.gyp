@@ -16,6 +16,7 @@
 	"variables": {
 		# Set the linker location, no extra linking needed, just link backwards one directory
 		"ORIGIN_LIB_PATH%": "$$ORIGIN/../../installer/clidriver/lib",
+		#"MAC_LOADER_PATH%": "@loader_path/../../installer/clidriver/lib/libdb2.dylib",
 	},
 	'conditions' : [
         [ 'OS == "linux" and target_arch =="ia32" ', {
@@ -58,23 +59,16 @@
         }],
 		
 		[ 'OS == "mac" and target_arch =="x64" ', {
-		  'conditions' : [
-			[ 'IS_DOWNLOADED == "true" ', {
-				'ldflags' : [
-					"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
-				],
-			}]
-		  ],
 		  'xcode_settings': {
 			'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
 		    'conditions' : [
 				[ 'IS_DOWNLOADED == "true" ', {
-					'ldflags' : [
-						"-Wl,'<(ORIGIN_LIB_PATH)' "
-					],
-					'OTHER_LDFLAGS' : [
-						"-Wl,'<(ORIGIN_LIB_PATH)' "
-					],
+					#'ldflags' : [
+					#	"-Wl,-rpath,<(IBM_DB_HOME)/lib/libdb2.dylib "
+					#],
+					#'OTHER_LDFLAGS' : [
+					#	"-Wl,-rpath,'<(IBM_DB_HOME)/lib' "
+					#],
 				}]
 			]
 		  },

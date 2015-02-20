@@ -43,7 +43,7 @@ var download_file_httpget = function(file_url) {
 			console.log('We do not support x86 architecture for Windows platform. Please use an x64 architecture for building node-ibm_db. For any queries you can reach out opendev@us.ibm.com or open an issue on https://github.com/ibmdb/node-ibm_db');
 			return;
 		}
-	}
+	} 
 	
 	
 	if(process.env.IBM_DB_HOME) {
@@ -207,6 +207,20 @@ var download_file_httpget = function(file_url) {
 			}
 			console.log(license_agreement);
 		});
+		
+		if(platform == 'darwin' && arch == 'x64') {
+		
+			// Run the install_name_tool
+			var nameToolCommand = 'cd build/Release && install_name_tool -change libdb2.dylib $IBM_DB_HOME/clidriver/lib/libdb2.dylib odbc_bindings.node';
+			var childProcess = exec(buildString, function (error, stdout, stderr) {
+				console.log(stdout);
+				if (error !== null) {
+					console.log(error);
+					process.exit(0);
+				}
+				console.log(license_agreement);
+			});
+		}
 	}
 	
 	function removeWinBuildArchive() {
