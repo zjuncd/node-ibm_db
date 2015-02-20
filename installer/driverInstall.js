@@ -71,12 +71,10 @@ var download_file_httpget = function(file_url) {
 				buildBinary(false);
 			} else {
 				
-				console.log('Building binaries for node-ibm_db. Since these platforms are not completely supported, you might encounter errors. In such cases please open an issue on our repository, https://github.com/ibmdb/node-ibm_db.');
+				console.log('Building binaries for node-ibm_db. This platform is not completely supported, you might encounter errors. In such cases please open an issue on our repository, https://github.com/ibmdb/node-ibm_db.');
 				buildBinary(false);
 			}
 		}
-		
-		
 	} else {
 	
 		if(platform == 'win32') {
@@ -184,8 +182,6 @@ var download_file_httpget = function(file_url) {
 						removeWinBuildArchive();
 						
 					});
-				} else {
-				
 				}
 				
 			 });
@@ -205,22 +201,22 @@ var download_file_httpget = function(file_url) {
 				console.log(error);
 				process.exit(0);
 			}
-			console.log(license_agreement);
-		});
+
+			if(platform == 'darwin' && arch == 'x64') {
 		
-		if(platform == 'darwin' && arch == 'x64') {
-		
-			// Run the install_name_tool
-			var nameToolCommand = 'cd build/Release && install_name_tool -change libdb2.dylib $IBM_DB_HOME/clidriver/lib/libdb2.dylib odbc_bindings.node';
-			var childProcess = exec(buildString, function (error, stdout, stderr) {
-				console.log(stdout);
-				if (error !== null) {
-					console.log(error);
-					process.exit(0);
-				}
+				// Run the install_name_tool
+				var nameToolCommand = "install_name_tool -change libdb2.dylib $IBM_DB_HOME/lib/libdb2.dylib ./build/Release/odbc_bindings.node"
+				console.log('Running command tool  -->\n'+nameToolCommand);
+				var nameToolCmdProcess = exec(nameToolCommand , function (error1, stdout1, stderr1) {
+					if (error1 !== null) {
+						console.log('Error setting up the lib path to odbc_bindings.node file.Error trace:\n'+error1);
+						process.exit(0);
+					}
+				});
+
 				console.log(license_agreement);
-			});
-		}
+			}
+		});
 	}
 	
 	function removeWinBuildArchive() {
