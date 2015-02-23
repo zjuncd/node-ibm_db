@@ -97,6 +97,44 @@
 		'include_dirs': [
             '$(IBM_DB_HOME)/include',
           ],
+        }],
+		[ OS != "linux" and 'OS!="win" and 'OS!="darwin" and target_arch =="ia32" ', {
+		  'conditions' : [
+			[ 'IS_DOWNLOADED == "true" ', {
+				'ldflags' : [
+					"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
+				],
+			}]
+		  ],	
+          'libraries' : [
+            	'-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib32 ', 
+				'-ldb2'
+          ],	
+          'include_dirs': [
+				'$(IBM_DB_HOME)/include'
+           ],
+          'cflags' : [
+            "-g "
+          ],
+        }], 
+		[ 'OS != "linux" and 'OS!="win" and 'OS!="darwin" and target_arch =="x64" ', {
+		  'conditions' : [
+			[ 'IS_DOWNLOADED == "true" ', {
+				'ldflags' : [
+					"-Wl,-R,'<(ORIGIN_LIB_PATH)' "
+				],
+			}]
+		  ],		
+          'libraries' : [
+            	'-L$(IBM_DB_HOME)/lib -L$(IBM_DB_HOME)/lib64 ', 
+				'-ldb2'
+          ],	
+          'include_dirs': [
+				'$(IBM_DB_HOME)/include'
+           ],
+          'cflags' : [
+            "-g "
+          ],
         }]
       ]
     }

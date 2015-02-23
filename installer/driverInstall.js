@@ -40,7 +40,7 @@ var download_file_httpget = function(file_url) {
 			});
 			
 		} else {
-			console.log('We do not support x86 architecture for Windows platform. Please use an x64 architecture for building node-ibm_db. For any queries you can reach out opendev@us.ibm.com or open an issue on https://github.com/ibmdb/node-ibm_db');
+			console.log('Windows 32 bit not supported. Please use an x64 architecture');
 			return;
 		}
 	} 
@@ -81,9 +81,9 @@ var download_file_httpget = function(file_url) {
 		
 			if(arch == 'x64') {
 				installerfileURL = installerURL + 'ntx64_odbc_cli.zip';
-			} else {
+			}/* else {
 				installerfileURL = installerURL + 'nt32_odbc_cli.zip';
-			}
+			}*/
 		} else if(platform == 'linux') {
 			if(arch == 'x64') {
 				
@@ -97,6 +97,8 @@ var download_file_httpget = function(file_url) {
 				
 				installerfileURL = installerURL + 'macos64_odbc_cli.tar.gz';
 			}
+		} else {
+			installerfileURL = installerURL + platform + arch + '_odbc_cli.tar.gz';
 		}
 		
 		if(!installerfileURL) {
@@ -206,7 +208,6 @@ var download_file_httpget = function(file_url) {
 		
 				// Run the install_name_tool
 				var nameToolCommand = "install_name_tool -change libdb2.dylib $IBM_DB_HOME/lib/libdb2.dylib ./build/Release/odbc_bindings.node"
-				console.log('Running command tool  -->\n'+nameToolCommand);
 				var nameToolCmdProcess = exec(nameToolCommand , function (error1, stdout1, stderr1) {
 					if (error1 !== null) {
 						console.log('Error setting up the lib path to odbc_bindings.node file.Error trace:\n'+error1);
@@ -284,7 +285,6 @@ var download_file_httpget = function(file_url) {
 			}
 		});
 		return options;
-
 	}
 
 };
