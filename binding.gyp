@@ -16,7 +16,6 @@
 	"variables": {
 		# Set the linker location, no extra linking needed, just link backwards one directory
 		"ORIGIN_LIB_PATH%": "$$ORIGIN/../../installer/clidriver/lib",
-		#"MAC_LOADER_PATH%": "@loader_path/../../installer/clidriver/lib/libdb2.dylib",
 	},
 	'conditions' : [
         [ 'OS == "linux" and target_arch =="ia32" ', {
@@ -98,7 +97,7 @@
             '$(IBM_DB_HOME)/include',
           ],
         }],
-		[ OS != "linux" and 'OS!="win" and 'OS!="darwin" and target_arch =="ia32" ', {
+		[ 'OS != "linux" and OS!="win" and OS!="darwin" and target_arch =="ia32" ', {
 		  'conditions' : [
 			[ 'IS_DOWNLOADED == "true" ', {
 				'ldflags' : [
@@ -117,7 +116,7 @@
             "-g "
           ],
         }], 
-		[ 'OS != "linux" and 'OS!="win" and 'OS!="darwin" and target_arch =="x64" ', {
+		[ 'OS != "linux" and OS != "win" and OS != "darwin" and target_arch == "x64" ', {
 		  'conditions' : [
 			[ 'IS_DOWNLOADED == "true" ', {
 				'ldflags' : [

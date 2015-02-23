@@ -40,7 +40,7 @@ var download_file_httpget = function(file_url) {
 			});
 			
 		} else {
-			console.log('Windows 32 bit not supported. Please use an x64 architecture');
+			console.log('Windows 32 bit not supported. Please use an x64 architecture.');
 			return;
 		}
 	} 
@@ -96,6 +96,9 @@ var download_file_httpget = function(file_url) {
 			if(arch == 'x64') {
 				
 				installerfileURL = installerURL + 'macos64_odbc_cli.tar.gz';
+			} else {
+				console.log('Mac OS 32 bit not supported. Please use an x64 architecture.');
+				return;
 			}
 		} else {
 			installerfileURL = installerURL + platform + arch + '_odbc_cli.tar.gz';
