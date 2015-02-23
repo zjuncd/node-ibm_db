@@ -169,7 +169,9 @@ var download_file_httpget = function(file_url) {
 					console.log('Download and extraction of DB2 ODBC CLI Driver completed successfully ...');
 					console.log(license_agreement);
 					
-				} else if(platform == 'linux' || (platform == 'darwin' && arch == 'x64')) {
+				} 
+				//CLI Driver file for all platforms other than windows is a tar.gz file
+				else /*if(platform == 'linux' || (platform == 'darwin' && arch == 'x64'))*/ {
 
 						var targz = require('tar.gz');
 						var compress = new targz().extract(INSTALLER_FILE, DOWNLOAD_DIR, function(err){
