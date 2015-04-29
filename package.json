@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "bindings": "~1.0.0",
+	"nan": "*",
     "unzip": "*",
     "tar.gz": "*",
     "fstream": "*"
