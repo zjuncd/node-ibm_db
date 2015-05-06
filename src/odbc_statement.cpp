@@ -556,7 +556,7 @@ NAN_METHOD(ODBCStatement::ExecuteDirectSync) {
     ));
     
     NanReturnValue(NanNull());
-  }/*
+  }
   else {
    Local<Value> result[4];
     bool* canFreeHandle = new bool(false);
@@ -570,8 +570,9 @@ NAN_METHOD(ODBCStatement::ExecuteDirectSync) {
     Persistent<Object> js_result;
     NanAssignPersistent(js_result, NanNew<Function>(ODBCResult::constructor)->NewInstance(4, result));
     
-    NanReturnValue(js_result);
-  }*/
+    NanReturnValue(NanNew(js_result));
+	//NanReturnValue(NanNull());
+  }
 }
 
 /*
