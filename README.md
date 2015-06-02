@@ -5,6 +5,7 @@ An asynchronous/synchronous interface for node.js to IBM DB2 and IBM Informix.
 
 install
 --------
+note: node version 0.12.x is not yet supported, much like other native modules. Track 0.12.x progress [here](https://github.com/ibmdb/node-ibm_db/issues/28)
 
 You may install the package using npm install command:
 
@@ -64,6 +65,37 @@ or by creating an instance with the constructor function:
 ```javascript
 var Database = require("ibm_db").Database
   , ibmdb = new Database();
+```
+
+#### .open(connectionString, [options,] callback)
+
+Open a connection to a database.
+
+* **connectionString** - The connection string for your database
+* **options** - _OPTIONAL_ - Object type. Can be used to avoid multiple 
+    loading of native ODBC library for each call of `.open`.
+* **callback** - `callback (err, conn)`
+
+```javascript
+var ibmdb = require("ibm_db");
+var options = {};
+
+var getdata =  function (err, connection) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    connection.query("select 1 from sysibm.sysdymmy1", function (err1, rows) {
+      if (err1) console.log(err1);
+      else console.log(rows);
+      connection.close(function(err2) { });
+    });
+}
+
+ibmdb.open(connectionString, options, getdata);
+ibmdb.open(connectionString, options, getdata);
+ibmdb.open(connectionString, options, getdata);
+
 ```
 
 #### .openSync(connectionString)
@@ -202,7 +234,7 @@ var ibmdb = require("ibm_db")
   , cn = "DATABASE=database;HOSTNAME=hostname;PORT=port;PROTOCOL=TCPIP;UID=username;PWD=password;"
   ;
 
-ibmdb.open(cn,funtion(err,conn){
+ibmdb.open(cn,function(err,conn){
   conn.prepare("insert into hits (col1, col2) VALUES (?, ?)", function (err, stmt) {
     if (err) {
       //could not prepare for some reason
@@ -212,7 +244,8 @@ ibmdb.open(cn,funtion(err,conn){
 
     //Bind and Execute the statment asynchronously
     stmt.execute(['something', 42], function (err, result) {
-      result.closeSync();
+      if( err ) console.log(err);  
+      else result.closeSync();
 
       //Close the connection
 	  conn.close(function(err){}));
@@ -234,7 +267,7 @@ var ibmdb = require("ibm_db")
   , cn = "DATABASE=database;HOSTNAME=hostname;PORT=port;PROTOCOL=TCPIP;UID=username;PWD=password;"
   ;
 
-ibmdb.open(cn,funtion(err,conn){
+ibmdb.open(cn,function(err,conn){
   var stmt = conn.prepareSync("insert into hits (col1, col2) VALUES (?, ?)");
 
   //Bind and Execute the statment asynchronously
