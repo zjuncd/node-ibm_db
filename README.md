@@ -26,8 +26,7 @@ ibmdb.open("DRIVER={DB2};DATABASE=<dbname>;HOSTNAME=<myhost>;UID=db2user;PWD=pas
   
   conn.query('select * from user where user_id = ?', [42], function (err, data) {
     if (err) console.log(err);
-    
-    console.log(data);
+    else console.log(data);
 
     conn.close(function () {
       console.log('done');
@@ -65,6 +64,35 @@ or by creating an instance with the constructor function:
 ```javascript
 var Database = require("ibm_db").Database
   , ibmdb = new Database();
+```
+
+#### .open(connectionString, [options,] callback)
+
+Open a connection to a database.
+
+* **connectionString** - The connection string for your database
+* **options** - _OPTIONAL_ - Object type. Can be used to avoid multiple 
+    loading of native ODBC library for each call of `.open`.
+* **callback** - `callback (err, conn)`
+
+```javascript
+var ibmdb = require("ibm_db");
+
+ibmdb.open(connectionString, function (err, connection) {
+    if (err) 
+    {
+      console.log(err);
+      return;
+    }
+    connection.query("select 1 from sysibm.sysdymmy1", function (err1, rows) {
+      if (err1) console.log(err1);
+      else console.log(rows);
+      connection.close(function(err2) { 
+        if(err2) console.log(err2);
+      });
+    });
+};
+
 ```
 
 #### .openSync(connectionString)
@@ -213,7 +241,8 @@ ibmdb.open(cn,function(err,conn){
 
     //Bind and Execute the statment asynchronously
     stmt.execute(['something', 42], function (err, result) {
-      result.closeSync();
+      if( err ) console.log(err);  
+      else result.closeSync();
 
       //Close the connection
 	  conn.close(function(err){}));
@@ -410,7 +439,7 @@ This should probably be changed.
 
 #### .open(connectionString, callback)
 
-Get a Database` instance which is already connected to `connectionString`
+Get a `Database` instance which is already connected to `connectionString`
 
 * **connectionString** - The connection string for your database
 * **callback** - `callback (err, db)`

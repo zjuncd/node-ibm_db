@@ -352,6 +352,7 @@ Column* ODBC::GetColumns(SQLHSTMT hStmt, short* colCount) {
 void ODBC::FreeColumns(Column* columns, short* colCount) {
   for(int i = 0; i < *colCount; i++) {
       delete [] columns[i].name;
+      delete [] columns[i].type_name;
   }
 
   delete [] columns;
@@ -394,6 +395,15 @@ Handle<Value> ODBC::GetColumnValue( SQLHSTMT hStmt, Column column,
         
         if ((int)len == SQL_NULL_DATA) {
           return NanEscapeScope(NanNull());
+        }
+        else if((int)len == sizeof(int)){
+          return NanEscapeScope(NanNew<Number>((int)value));
+        }
+        else if((int)len == sizeof(short)){
+          return NanEscapeScope(NanNew<Number>((short)value));
+        }
+        else if((int)len == sizeof(long)){
+          return NanEscapeScope(NanNew<Number>((long)value));
         }
         else {
           return NanEscapeScope(NanNew<Number>(value));
